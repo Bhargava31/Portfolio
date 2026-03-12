@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhargava Bhat | Game Designer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0A0A0B; color: #a1a1aa; scroll-behavior: smooth; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Hide scrollbars for sliders */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Project Card & Hover */
+        .project-card { 
+            min-width: 300px; 
+            background: #111112; 
+            border: 1px solid #1f1f21; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover { border-color: #3b82f6; transform: translateY(-8px); background: #161617; }
+
+        /* Modal Blur */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            align-items: center; justify-content: center;
+        }
+
+        /* Auto-Ticker Animation */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .ticker-track {
+            display: flex;
+            width: fit-content;
+            animation: scroll 30s linear infinite;
+        }
+        .ticker-track:hover { animation-play-state: paused; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="modal-overlay" onclick="closeModal()" class="p-4">
+        <div class="bg-[#161617] border border-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onclick="event.stopPropagation()">
+            <div class="sticky top-0 bg-[#161617] p-6 border-b border-gray-800 flex justify-between items-center z-10">
+                <h2 id="m-title" class="text-2xl font-black text-white uppercase tracking-tighter">Project Title</h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-white text-3xl">&times;</button>
+            </div>
+            <div class="p-8">
+                <div id="m-image-container" class="w-full aspect-video bg-gray-900 rounded-xl mb-8 flex items-center justify-center border border-gray-800 text-gray-700 italic overflow-hidden">
+                    <p id="m-placeholder-text">Project Visual Asset (Placeholder)</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 text-left">
+                    <div class="md:col-span-2">
+                        <h4 class="text-blue-500 font-bold uppercase text-[10px] mb-2 mono tracking-widest">Description</h4>
+                        <p id="m-description" class="text-gray-300 leading-relaxed mb-8 text-sm md:text-base"></p>
+                        
+                        <h4 class="text-blue-500 font-bold uppercase text-[10px] mb-2 mono tracking-widest">My Work</h4>
+                        <ul id="m-work" class="list-disc list-inside text-sm text-gray-400 space-y-3 mb-8"></ul>
+                    </div>
+                    <div class="bg-[#1c1c1e] p-6 rounded-xl h-fit border border-gray-800">
+                        <p class="text-[10px] font-bold text-gray-500 uppercase mb-1 mono">Role</p>
+                        <p id="m-role" class="text-sm text-white mb-6 font-bold"></p>
+                        
+                        <p class="text-[10px] font-bold text-gray-500 uppercase mb-1 mono">Tools Used</p>
+                        <p id="m-tools" class="text-sm text-white mb-8"></p>
+                        
+                        <a id="m-gdd" href="#" target="_blank" class="block w-full text-center bg-white text-black font-black py-4 rounded-sm hover:bg-blue-600 hover:text-white transition uppercase text-[10px] tracking-widest">Open GDD</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 bg-[#0A0A0B]/80 backdrop-blur-md border-b border-gray-900 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="font-black text-white tracking-tighter text-xl">BHARGAVA BHAT</div>
+            <div class="flex space-x-6 text-[10px] font-bold uppercase tracking-widest mono">
+                <a href="#about" class="hover:text-blue-500 transition">About</a>
+                <a href="#projects" class="hover:text-blue-500 transition">Works</a>
+                <a href="#contact" class="hover:text-blue-500 transition text-blue-500">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex flex-col justify-center px-6 lg:px-24">
+        <div class="max-w-5xl">
+            <p class="text-blue-500 mono font-bold tracking-widest mb-4">HI, I AM BHARGAVA BHAT</p>
+            <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none">🎮 GAME <span class="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-transparent">DESIGNER</span></h1>
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="bg-gray-900 px-4 py-2 rounded text-[10px] font-bold text-gray-400 border border-gray-800">📍 India</span>
+                <span class="bg-gray-900 px-4 py-2 rounded text-[10px] font-bold text-gray-400 border border-gray-800 uppercase tracking-widest">🎯 Aspiring Game Designer</span>
+            </div>
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl leading-relaxed mb-10 font-light italic">
+                Specializing in Gameplay Systems, Narrative Design, and Player Experience.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="mailto:bhargavasgamelab04@gmail.com" class="bg-white text-black px-10 py-4 font-black rounded-sm hover:bg-blue-600 hover:text-white transition uppercase text-[10px] tracking-widest">📧 bhargavasgamelab04@gmail.com</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="py-12 border-y border-gray-900 bg-[#0E0E10] overflow-hidden">
+        <div class="ticker-track space-x-16">
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Game Design Documentation</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Core Mechanics</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Narrative Design</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Unity Engine</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">UI/UX Wireframes</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">QA Testing</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Player Experience</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Game Design Documentation</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Core Mechanics</span>
+            <span class="text-3xl font-black text-gray-800 italic uppercase">Narrative Design</span>
+        </div>
+    </div>
+
+    <section id="about" class="py-32 px-6 lg:px-24 max-w-6xl">
+        <h2 class="text-4xl font-black text-white uppercase tracking-tighter mb-10">👋 About Me</h2>
+        <div class="space-y-8 text-lg md:text-xl leading-relaxed text-gray-400 font-light">
+            <p>I am an aspiring <span class="text-white font-bold">Game Designer</span> focused on designing gameplay systems and narrative-driven experiences. I enjoy transforming emotions, themes, and mechanics into meaningful player interactions that shape memorable player experiences.</p>
+            <p>I have hands-on experience working with real teams, writing <span class="text-blue-500 font-bold">Game Design Documents (GDDs)</span>, designing core gameplay mechanics, puzzle flows, and UI wireframes, and contributing as a QA tester for published games.</p>
+            <p>My goal is to continuously grow as a designer while creating games that deliver strong emotional and interactive experiences for players.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="py-32 space-y-32">
+        
+        <div class="px-6 lg:px-24">
+            <h2 class="text-white font-black text-xs mb-8 uppercase tracking-[0.4em] text-blue-500">01. Game Jam Projects</h2>
+            <div class="flex overflow-x-auto gap-8 no-scrollbar pb-6">
+                <div onclick="openModal('holdon')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Hold On</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Gravity and world-flip mechanic prototype.</p>
+                </div>
+                <div onclick="openModal('folly')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Folly's Veil</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Illusion-based psychological horror.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-6 lg:px-24">
+            <h2 class="text-white font-black text-xs mb-8 uppercase tracking-[0.4em] text-blue-500">02. Team Collaboration Projects</h2>
+            <div class="flex overflow-x-auto gap-8 no-scrollbar pb-6">
+                <div onclick="openModal('primal')" class="project-card p-10 rounded-2xl shrink-0 w-[450px]">
+                    <h3 class="text-white font-black text-2xl mb-4 leading-tight">Primal Breach: <br>The Serum</h3>
+                    <p class="text-gray-500 text-sm">Environmental storytelling horror concept.</p>
+                </div>
+                <div onclick="openModal('anomaly')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Codename <br>Anomaly</h3>
+                    <p class="text-gray-500 text-sm">Investigation based narrative concept.</p>
+                </div>
+                <div onclick="openModal('bakasura')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Bakasura.io</h3>
+                    <p class="text-gray-500 text-sm">Multiplayer growth mechanic concept.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-6 lg:px-24">
+            <h2 class="text-white font-black text-xs mb-8 uppercase tracking-[0.4em] text-blue-500">03. Board Game Design</h2>
+            <div onclick="openModal('puppet')" class="project-card p-10 rounded-2xl w-full max-w-lg">
+                <h3 class="text-white font-black text-2xl mb-4">Puppet of Hell</h3>
+                <p class="text-gray-500 text-sm">Strategic manipulation and rule systems design.</p>
+            </div>
+        </div>
+
+        <div class="px-6 lg:px-24">
+            <h2 class="text-white font-black text-xs mb-8 uppercase tracking-[0.4em] text-blue-500">04. Solo Projects</h2>
+            <div class="flex overflow-x-auto gap-8 no-scrollbar pb-6">
+                <div onclick="openModal('mithai')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Mithai Legends</h3>
+                    <p class="text-gray-500 text-sm">2.5D endless flyer with festival themes.</p>
+                </div>
+                <div onclick="openModal('zenitsu')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Zenitsu <br>Metroidvania</h3>
+                    <p class="text-blue-500 mono text-[10px] font-bold uppercase mb-2">In Progress</p>
+                    <p class="text-gray-500 text-sm">Learning Unity combat and abilities.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-6 lg:px-24">
+            <h2 class="text-white font-black text-xs mb-8 uppercase tracking-[0.4em] text-blue-500">05. AI Game Jam Projects</h2>
+            <div class="flex overflow-x-auto gap-8 no-scrollbar pb-6">
+                <div onclick="openModal('campsite')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Campsite Survival</h3>
+                    <p class="text-gray-500 text-sm">Wilderness resource management prototype.</p>
+                </div>
+                <div onclick="openModal('zenrush')" class="project-card p-10 rounded-2xl shrink-0 w-[350px]">
+                    <h3 class="text-white font-black text-2xl mb-4">Zen Rush</h3>
+                    <p class="text-gray-500 text-sm">Procedural fast-paced reaction mechanics.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="process" class="py-32 px-6 lg:px-24">
+        <h2 class="text-4xl font-black text-white uppercase tracking-tighter mb-16 italic">🧠 My Design Process</h2>
+        <div class="grid md:grid-cols-5 gap-4">
+            <div class="p-8 bg-[#111112] border border-gray-900 rounded">
+                <p class="text-blue-500 mono font-bold text-xs mb-4">01</p>
+                <h4 class="text-white font-bold mb-3 text-sm">Theme & Emotion</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Define the emotional experience the player should feel.</p>
+            </div>
+            <div class="p-8 bg-[#111112] border border-gray-900 rounded">
+                <p class="text-blue-500 mono font-bold text-xs mb-4">02</p>
+                <h4 class="text-white font-bold mb-3 text-sm">Core Mechanic</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Create primary gameplay interactions that support the theme.</p>
+            </div>
+            <div class="p-8 bg-[#111112] border border-gray-900 rounded">
+                <p class="text-blue-500 mono font-bold text-xs mb-4">03</p>
+                <h4 class="text-white font-bold mb-3 text-sm">Player Experience</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Plan how the player discovers, learns, and master mechanics.</p>
+            </div>
+            <div class="p-8 bg-[#111112] border border-gray-900 rounded">
+                <p class="text-blue-500 mono font-bold text-xs mb-4">04</p>
+                <h4 class="text-white font-bold mb-3 text-sm">Build Systems</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Expand the mechanic into challenges and progression.</p>
+            </div>
+            <div class="p-8 bg-[#111112] border border-gray-900 rounded">
+                <p class="text-blue-500 mono font-bold text-xs mb-4">05</p>
+                <h4 class="text-white font-bold mb-3 text-sm">Iterate</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Improve the design through testing and feedback loops.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-32 px-6 border-t border-gray-900 text-center">
+        <h2 class="text-white text-5xl font-black uppercase tracking-tighter mb-8 italic">📬 Contact</h2>
+        <p class="max-w-2xl mx-auto mb-16 text-gray-500 text-lg">I am eager to collaborate, learn, and grow as a game designer while creating meaningful player experiences.</p>
+        <div class="space-y-6">
+            <a href="mailto:bhargavasgamelab04@gmail.com" class="text-blue-500 text-2xl font-black hover:text-white transition mono">bhargavasgamelab04@gmail.com</a>
+            <p class="text-gray-700 font-bold uppercase tracking-[0.5em] text-xs">Discord: bharguop_75409</p>
+        </div>
+        <p class="mt-32 text-[10px] text-gray-800 mono">© 2026 Bhargava Bhat | Portfolio V1</p>
+    </footer>
+
+    <script>
+        const projectData = {
+            'holdon': {
+                title: "Hold On",
+                role: "Game Designer",
+                description: "A fast-paced game jam prototype built around a reality drag, gravity and world-flip mechanic. The player must navigate challenging environments by flipping gravity and adapting to shifting perspectives, creating tension and quick decision-making moments.",
+                work: [
+                    "Designed the core reality drag and gravity-flip mechanic",
+                    "Defined puzzle and obstacle progression",
+                    "Designed gameplay flow for increasing difficulty",
+                    "Wrote the Game Design Document (GDD)"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs, Miro",
+                image: "" // Add image filename here later
+            },
+            'folly': {
+                title: "Folly's Veil",
+                role: "Game Designer",
+                description: "An illusion-based psychological horror game jam project focused on environmental storytelling and subtle visual anomalies that create tension and uncertainty for the player.",
+                work: [
+                    "Designed illusion-based gameplay mechanics",
+                    "Created anomaly and environment interaction concepts",
+                    "Defined narrative-driven exploration structure",
+                    "Documented the design through a Game Design Document"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs, Miro",
+                image: ""
+            },
+            'primal': {
+                title: "Primal Breach: The Serum",
+                role: "Game Designer",
+                description: "A horror game concept centered around exploring a secret laboratory where experimental creatures were created using a mysterious serum. The design focuses on environmental storytelling, puzzle progression, and building tension through exploration.",
+                work: [
+                    "Designed puzzle progression and puzzle mechanics",
+                    "Created environmental narrative design concepts",
+                    "Structured gameplay flow and player objectives",
+                    "Wrote and maintained the Game Design Document",
+                    "Collaborated with team member on design systems"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs, Miro",
+                image: ""
+            },
+            'anomaly': {
+                title: "Codename Anomaly",
+                role: "Game Designer",
+                description: "A narrative-driven concept where players investigate strange anomalies appearing in Himalayas mountain night while sitting inside a car. Each anomaly subtly changes reality.",
+                work: [
+                    "Designed anomaly interaction systems",
+                    "Created narrative structure for anomaly discovery",
+                    "Defined core investigation gameplay mechanics",
+                    "Collaborated with the team on design direction"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs, Miro",
+                image: ""
+            },
+            'bakasura': {
+                title: "Bakasura.io",
+                role: "Game Designer",
+                description: "Multiplayer .io-style game inspired by Indian mythology. Players control a growing creature that consumes objects to become powerful. (Project Cancelled but GDD completed).",
+                work: [
+                    "Designed the core gameplay loop based on .io growth mechanics",
+                    "Defined how players consume environmental objects and villagers to grow",
+                    "Structured player progression and scaling mechanics",
+                    "Created and wrote the complete Game Design Document"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs",
+                image: ""
+            },
+            'puppet': {
+                title: "Puppet of Hell",
+                role: "Game Designer",
+                description: "A board game design project focused on strategic decision-making and player interaction. Players influence events and control outcomes through calculated manipulation choices.",
+                work: [
+                    "Designed the card and core rule system",
+                    "Created player interaction mechanics",
+                    "Defined win conditions and progression",
+                    "Refined gameplay balance"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Google Docs, Miro, Gemini & Picsart",
+                image: ""
+            },
+            'mithai': {
+                title: "Mithai Legends",
+                role: "Game Designer",
+                description: "A 2.5D endless flyer concept inspired by Indian sweets and festivals. Focuses on simple but engaging gameplay in vibrant environments.",
+                work: [
+                    "Designed the core endless gameplay loop",
+                    "Created event-based progression systems",
+                    "Developed character and environment concepts",
+                    "Wrote the Game Design Document"
+                ],
+                gdd: "LINK_HERE",
+                tools: "Notion",
+                image: ""
+            },
+            'zenitsu': {
+                title: "Zenitsu Metroidvania",
+                role: "Game Designer / Unity Developer",
+                description: "A small Metroidvania-style learning project focused on Unity 2D development and experimenting with combat and ability progression.",
+                work: [
+                    "Designed character abilities and combat mechanics",
+                    "Defined level exploration and progression structure",
+                    "Prototyped gameplay mechanics in Unity",
+                    "Created gameplay documentation"
+                ],
+                gdd: "work in progress",
+                tools: "Unity, Google Docs",
+                image: ""
+            },
+            'campsite': {
+                title: "Campsite Survival",
+                role: "Game Designer",
+                description: "An experimental AI-assisted game jam concept where players manage wilderness resources and respond to unexpected events.",
+                work: [
+                    "Designed the survival gameplay loop",
+                    "Defined player objectives and progression",
+                    "Experimented with AI-assisted prototyping workflows"
+                ],
+                gdd: "LINK_HERE",
+                tools: "AI Tools (Astrocade), Google Docs",
+                image: ""
+            },
+            'zenrush': {
+                title: "Zen Rush",
+                role: "Game Designer",
+                description: "Fast-paced experimental concept exploring high-speed gameplay, quick reaction mechanics, and procedural challenge generation.",
+                work: [
+                    "Designed the core fast-paced gameplay system",
+                    "Defined procedural challenge concepts",
+                    "Documented gameplay mechanics and player flow"
+                ],
+                gdd: "LINK_HERE",
+                tools: "AI Tools (Astrocade), Google Docs",
+                image: ""
+            }
+        };
+
+        function openModal(id) {
+            const data = projectData[id];
+            if(!data) return;
+
+            document.getElementById('m-title').innerText = data.title;
+            document.getElementById('m-description').innerText = data.description;
+            document.getElementById('m-role').innerText = data.role;
+            document.getElementById('m-tools').innerText = data.tools;
+            document.getElementById('m-gdd').href = data.gdd;
+
+            const workList = document.getElementById('m-work');
+            workList.innerHTML = '';
+            data.work.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                workList.appendChild(li);
+            });
+
+            // Handle Image
+            const imgContainer = document.getElementById('m-image-container');
+            const placeholder = document.getElementById('m-placeholder-text');
+            if(data.image) {
+                imgContainer.innerHTML = `<img src="${data.image}" class="w-full h-full object-cover">`;
+            } else {
+                imgContainer.innerHTML = `<p class="italic text-gray-700">Project Asset (Placeholder)</p>`;
+            }
+
+            document.getElementById('modal-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
